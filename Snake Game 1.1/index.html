@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        #gameCanvas {
+            display: block;
+            margin: 0 auto;
+            border: 4px solid #6b7280;
+            border-radius: 8px;
+        }
+        .game-container {
+            background: linear-gradient(135deg, #e0f2fe, #a7f3d0);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .start-btn {
+            background-color: #34d399;
+            color: white;
+            padding: 12px 20px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .start-btn:hover {
+            background-color: #10b981;
+        }
+        .header {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #374151;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .score-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .settings {
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .skin-select {
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-sky-500 via-teal-500 to-emerald-500 flex items-center justify-center min-h-screen">
+
+    <div class="game-container">
+        <h1 class="header">Snake Game</h1>
+        <div class="score-display">Score: <span id="score">0</span></div>
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <div class="mt-4 text-center">
+            <button id="startButton" class="start-btn">Start Game</button>
+        </div>
+
+        <!-- Additional Settings -->
+        <div class="settings">
+            <label for="gameSpeed">Game Speed:</label>
+            <input type="range" id="gameSpeed" min="50" max="200" value="100">
+        </div>
+        <div class="skin-select">
+            <label for="snakeSkin">Select Snake Skin:</label>
+            <select id="snakeSkin">
+                <option value="🟩">🟩</option>
+                <option value="🟨">🟨</option>
+                <option value="🟢">🟢</option>
+                <option value="🟠">🟠</option>
+            </select>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const startButton = document.getElementById('startButton');
+        const scoreDisplay = document.getElementById('score');
+        const gameSpeedInput = document.getElementById('gameSpeed');
+        const snakeSkinSelect = document.getElementById('snakeSkin');
+
+        const box = 20;
+        let snake = [];
+        let food;
+        let score;
+        let d;
+        let game;
+        let gravityMode = false;
+        let currentHeadEmoji;
+        let currentFoodEmoji;
+
+        const emojis = [
+            "🟩", "🟨", "🟢", "🟠"
+        ];
+
+        const foodEmojis = [
+            "🍏", "🍎", "🥑", "🍇", "🍓", "🍑", "🍒",
+            "🥝", "🍅", "🧀", "🍉"
+        ];
+
+	function resetGame() {
+    		snake = [{ x: 9 * box, y: 10 * box }];
+    		score = 0;
+    		scoreDisplay.textContent = score; // Reset score display
+    		d = null;
+    		currentHeadEmoji = snakeSkinSelect.value; // Start with selected skin
+    		food = createFood();
+    		currentFoodEmoji = foodEmojis[Math.floor(Math.random() * foodEmojis.length)]; // Initialize food emoji
+    		clearInterval(game);
+    		game = setInterval(draw, gameSpeedInput.value);
+	}
+
+
+        function createFood() {
+            return {
+                x: Math.floor(Math.random() * 19 + 1) * box,
+                y: Math.floor(Math.random() * 19 + 1) * box
+            };
+        }
+
+        document.addEventListener('keydown', direction);
+
+        function direction(event) {
+            if ((event.key === 'a' || event.key === 'A') && d !== 'RIGHT') {
+                d = 'LEFT';
+            } else if ((event.key === 'w' || event.key === 'W') && d !== 'DOWN') {
+                d = 'UP';
+            } else if ((event.key === 'd' || event.key === 'D') && d !== 'LEFT') {
+                d = 'RIGHT';
+            } else if ((event.key === 's' || event.key === 'S') && d !== 'UP') {
+                d = 'DOWN';
+            }
+        }
+
+        function collision(newHead, array) {
+            for (let i = 0; i < array.length; i++) {
+                if (newHead.x === array[i].x && newHead.y === array[i].y) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < snake.length; i++) {
+                if (i === 0) {
+                    ctx.font = `${box}px Arial`;
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText(currentHeadEmoji, snake[i].x + box / 2, snake[i].y + box / 2);
+                } else {
+                    ctx.fillStyle = '#f9fafb';
+                    ctx.fillRect(snake[i].x, snake[i].y, box, box);
+                    ctx.strokeStyle = '#4b5563';
+                    ctx.strokeRect(snake[i].x, snake[i].y, box, box);
+                }
+            }
+
+            ctx.font = `${box}px Arial`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(currentFoodEmoji, food.x + box / 2, food.y + box / 2);
+
+            let snakeX = snake[0].x;
+            let snakeY = snake[0].y;
+
+            if (d === 'LEFT') snakeX -= box;
+            if (d === 'UP') snakeY -= box;
+            if (d === 'RIGHT') snakeX += box;
+            if (d === 'DOWN') snakeY += box;
+
+            if (gravityMode) {
+                food.y += 2; // Simulate gravity by moving food downward.
+                if (food.y > canvas.height) {
+                    food = createFood(); // Reset food if it moves out of bounds
+                }
+            }
+
+            if (snakeX === food.x && snakeY === food.y) {
+                score++;
+                scoreDisplay.textContent = score;
+                food = createFood();
+                currentFoodEmoji = foodEmojis[Math.floor(Math.random() * foodEmojis.length)];
+            } else {
+                snake.pop();
+            }
+
+            let newHead = { x: snakeX, y: snakeY };
+
+            if (snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake)) {
+                clearInterval(game);
+                ctx.fillStyle = '#f87171';
+                ctx.font = '2rem sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
+                return;
+            }
+
+            snake.unshift(newHead);
+        }
+
+        startButton.addEventListener('click', resetGame);
+    </script>
+</body>
+</html>
