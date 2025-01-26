@@ -1,17 +1,30 @@
 # Snake Game Built with Modern Web Technologies 🐍🎮
 
+
+https://github.com/user-attachments/assets/308adbc8-a80f-486f-8b23-361f51a49e9b
+
+
 ### Today I was able to update the snake game I created two months ago to Snake Game 1.1 🚀
 
 I've developed a **modern version of the classic Snake Game**, bringing it into the 21st century with interactive features and a sleek design. Here's an overview of the new functionalities and the cutting edge web technologies used to create this fun and customizable game.
 
 ### ❄️ **Key Features**:
 1. **Customizable Snake Skins**: Players can now choose from various snake skins using emojis, adding a personalized touch to the gameplay.
-2. **Dynamic Game Speed**: A game speed slider lets users adjust the pace of the game to suit their preferences, making the experience more flexible.
-3. **Interactive Food Emojis**: Gone are the plain food blocks! Now, food is represented by vibrant emojis like 🍏, 🍎, 🍇, and more.
-4. **Gravity Mode**: Food now "falls" with gravity, adding a new layer of challenge and excitement to the game.
-5. **Score Display**: Real time score tracking outside the canvas allows players to monitor their progress without any interruptions to the game view.
-6. **Modern UI/UX**: A responsive, visually appealing layout featuring gradients, intuitive controls, and sleek button animations make the game a joy to play.
-7. **Game Reset with Settings**: The game reset includes the user's personalized settings (speed, snake skin, etc.) for a seamless experience every time.
+
+![03](https://github.com/user-attachments/assets/037a1347-d694-4ed8-990f-28467949f0fa)
+
+3. **Dynamic Game Speed**: A game speed slider lets users adjust the pace of the game to suit their preferences, making the experience more flexible.
+4. **Interactive Food Emojis**: Gone are the plain food blocks! Now, food is represented by vibrant emojis like 🍏, 🍎, 🍇, and more.
+
+![02](https://github.com/user-attachments/assets/d9edbf88-6083-4181-9a71-04d1419f8332)
+   
+6. **Gravity Mode**: Food now "falls" with gravity, adding a new layer of challenge and excitement to the game.
+7. **Score Display**: Real time score tracking outside the canvas allows players to monitor their progress without any interruptions to the game view.
+8. **Modern UI/UX**: A responsive, visually appealing layout featuring gradients, intuitive controls, and sleek button animations make the game a joy to play.
+
+![01](https://github.com/user-attachments/assets/c33b1aac-e38f-4e00-bf66-90c61c099731)
+   
+10. **Game Reset with Settings**: The game reset includes the user's personalized settings (speed, snake skin, etc.) for a seamless experience every time.
 
 ### 🌍 **Technologies Used**:
 - **HTML5** & **CSS3**: The foundation for building a responsive and accessible web based game.
