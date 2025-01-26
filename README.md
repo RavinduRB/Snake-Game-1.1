@@ -1,6 +1,6 @@
 # Snake Game Built with Modern Web Technologies 🐍🎮
 
-### Today I was able to update the snake game I created two months ago to Snake Game 1.1. 🚀
+### Today I was able to update the snake game I created two months ago to Snake Game 1.1 🚀
 
 I've developed a **modern version of the classic Snake Game**, bringing it into the 21st century with interactive features and a sleek design. Here's an overview of the new functionalities and the cutting edge web technologies used to create this fun and customizable game.
 
